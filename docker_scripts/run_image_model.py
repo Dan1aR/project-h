@@ -1,4 +1,4 @@
-
+# Author: German Beyger <germanbeyger@icloud.com>
 
 from model_loader import TensorflowLoader
 
