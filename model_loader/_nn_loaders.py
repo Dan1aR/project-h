@@ -1,12 +1,11 @@
 # Author: German Beyger <germanbeyger@icloud.com>
 
-from typing import List, Union
-
 import os
-import tensorflow as tf
-import numpy as np
+from typing import Dict, List, Union
 
-from predictors import ImagePredictor
+import numpy as np
+import tensorflow as tf
+#from predictors import ImagePredictor
 
 """
     This class is used to load models and provide convenient way of interacting with them.
@@ -15,27 +14,32 @@ from predictors import ImagePredictor
         it doesn't matter if model is from TensorFlow or Torch.
 """
 
-class Loader:
-    pass
+__all__ = ["Loader", "TensorflowLoader", "TorchLoader"]
 
-class TensorflowLoader(Loader):
+class Loader:
+    def __init__(self, ):
+        pass
+
+class TensorflowLoader:
     def __init__(self, path : str):
         self.model = self.load_model_from_file(path)
 
     # Simple keras model load
-    def load_model_from_file(self,) -> tf.keras.Model:
-        return tf.keras.models.load_model(self.path, compile=False)
+    def load_model_from_file(self, path: str) -> tf.keras.Model:
+        return tf.keras.models.load_model(path, compile=False)
 
-    def predict(self, image_tensor: Union[np.array, ImagePredictor, List[np.array]] ) -> np.array:
-        if type(image_tensor) == np.array:
+    def predict(self, image_tensor: Union[np.ndarray, List[np.ndarray]]) -> np.ndarray:
+        if type(image_tensor) == np.ndarray:
             # Simple input
             return self.model.predict(image_tensor)
         elif type(image_tensor) == list:
             # Multiple inputs in one model
-            return self.model.predict(image_tensor)
+            return self.model.predict()
         else:
             # We can use model as input to another model if output shape fits input.
             raise NotImplementedError()
 
-class TorchLoader(Loader):
-    pass
+
+class TorchLoader:
+    def __init__(self, ):
+        pass
